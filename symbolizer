@@ -23,7 +23,7 @@ timeout=$4
 mode=""
 restricted=0
 
-if [ "$omode" != "" ] && [ "$omode" != "archive" ] && [ "$omode" != "rsync" ] && [ "$omode" != "snap" ] && [ "$omode" != "rebuild" ] && [ "$omode" != "safe" ] && [ "$omode" != "blackhole" ];
+if [ "$omode" != "" ] && [ "$omode" != "archive" ] && [ "$omode" != "rsync" ] && [ "$omode" != "snap" ] && [ "$omode" != "rebuild" ] && [ "$omode" != "safe" ] && [ "$omode" != "blackhole" ] && [ "$omode" != "justLink" ];
 then
 	echo "unknown mode $omode"
 	exit 0
@@ -48,6 +48,7 @@ then
 	echo "- rebuild"
 	echo "- safe"
 	echo "- blackhole"
+	echo "- justLink"
 
 
         exit 0
@@ -169,6 +170,16 @@ then
 	find "$from" -type l -delete >/dev/null 2>&1
         rsync -avP --safe-links --size-only --remove-source-files "$from"/* "$to"/
 	find "$from" -type d -mindepth 1 -empty -delete >/dev/null 2>&1
+        # status file
+        echo "Job finished: " $(date) >> "$from"/.syncStatus
+        exit 0
+fi
+
+# justLink mode  
+if [ "$mode" == "justLink" ];
+then
+        echo "Mode: justLink"
+        cp -ans  "$to"/* "$from"/ >/dev/null 2>&1
         # status file
         echo "Job finished: " $(date) >> "$from"/.syncStatus
         exit 0
