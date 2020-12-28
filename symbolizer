@@ -1,0 +1,182 @@
+#!/bin/bash
+
+#############################################
+# syntax:
+# symbolizer <from> <to> [mode] [timeout]
+#
+# possible override modes
+# - archive
+# - rsync
+# - snap
+# - rebuild
+#
+#############################################
+# by R.Rusch, Berlin 2020
+# Contact: https://keybase.io/reinerrusch
+#############################################
+
+
+from=$1
+to=$2
+omode=$3
+timeout=$4
+mode=""
+restricted=0
+
+if [ "$omode" != "" ] && [ "$omode" != "archive" ] && [ "$omode" != "rsync" ] && [ "$omode" != "snap" ] && [ "$omode" != "rebuild" ] && [ "$omode" != "safe" ] && [ "$omode" != "blackhole" ];
+then
+	echo "unknown mode $omode"
+	exit 0
+fi
+
+if [ "$timeout" == "" ];
+then
+	timeout=3600
+fi
+
+
+if [ "$from" == "" ] || [ "$to" == "" ];
+then
+	echo ""
+	echo "Syntax:"
+	echo "symbolizer <from> <to> [mode] [timeout]"
+	echo ""
+	echo "possible override modes:"
+	echo "- archive"
+	echo "- rsync"
+	echo "- snap"
+	echo "- rebuild"
+	echo "- safe"
+	echo "- blackhole"
+
+
+        exit 0
+else
+        from=$(readlink -f $from)
+        to=$(readlink -f $to)
+        echo "$from -> $to"
+fi
+
+if [ "$omode" == "safe" ];
+then
+	restricted=1
+	omode=""
+fi
+
+
+if [ ! -e "$from"/.archive ] && [ ! -e "$from"/.snap ] && [ "$omode" == "" ];
+then
+	if [ ! -e "$from"/.rebuild ];
+	then
+        	touch "$from"/.archive >/dev/null 2>&1
+	        touch "$from"/.snap >/dev/null 2>&1
+	else
+		rm "$from"/.rebuild >/dev/null 2>&1
+	fi
+fi
+
+
+# modes
+if [ "$omode" == "" ];
+then
+	#archive
+	if [ -e "$from"/.archive ] && [ ! -e "$from"/.snap ];
+	then
+		mode="archive"
+	fi
+
+	#rsync
+        if [ -e "$from"/.archive ] && [ -e "$from"/.snap ];
+        then
+		mode="rsync"
+	fi
+	
+	#snap
+        if [ ! -e "$from"/.archive ] && [ -e "$from"/.snap ];
+        then
+		mode="snap"
+	fi
+
+	#rebuild
+        if [ ! -e "$from"/.archive ] && [ ! -e "$from"/.snap ] && [ -e "$from"/.rebuild ];
+        then
+		mode="rebuild"
+        fi
+else
+	mode="$omode"
+fi
+
+
+# do it!
+
+# status file
+echo "Mode: " $mode > "$from"/.syncStatus
+echo "Job startet: " $(date) >> "$from"/.syncStatus
+
+# rebuild mode
+if [ "$mode" == "rebuild" ] && [ $restricted -eq 0 ];
+then
+	echo "Mode: rebuild"
+	if [ "$omode" == "" ];
+	then
+		touch "$from"/.archive >/dev/null 2>&1
+	touch "$from"/.snap >/dev/null 2>&1
+	fi
+	rsync -avP --safe-links --size-only "$from"/* "$to"/ 
+	find "$from" -type l -print -exec cp "{}" "{}.tmp" \; -exec mv "{}.tmp" "{}" \; >/dev/null 2>&1
+	# status file
+	echo "Job finished: " $(date) >> "$from"/.syncStatus
+	exit 0
+fi
+	
+# snap mode
+if [ "$mode" == "snap" ] && [ $restricted -eq 0 ];
+then
+	echo "Mode: snap"
+	rsync -avP --safe-links --size-only --delete "$from"/ "$to"/ >/dev/null 2>&1 
+	rm "$from"/.snap >/dev/null 2>&1
+	# status file
+	echo "Job finished: " $(date) >> "$from"/.syncStatus
+	exit 0
+fi
+        
+	
+# archive mode	
+if [ "$mode" == "archive" ];
+then
+	echo "Mode: archive"
+	timeout -k $timeout -s 9 $timeout rsync -avP --safe-links --size-only --remove-source-files "$from"/* "$to"/ 
+	cp -ans  "$to"/* "$from"/ >/dev/null 2>&1 
+	# status file
+	echo "Job finished: " $(date) >> "$from"/.syncStatus
+	exit 0
+fi
+	
+# rsync mode	
+if [ "$mode" == "rsync" ];
+then
+	echo "Mode: rsync"
+	rsync -avP --safe-links --size-only "$from"/* "$to"/ 
+	# status file
+	echo "Job finished: " $(date) >> "$from"/.syncStatus
+	exit 0
+fi
+
+# blackhole mode
+if [ "$mode" == "blackhole" ];
+then
+        echo "Mode: blackhole"
+	find "$from" -type l -delete >/dev/null 2>&1
+        rsync -avP --safe-links --size-only --remove-source-files "$from"/* "$to"/
+	find "$from" -type d -mindepth 1 -empty -delete >/dev/null 2>&1
+        # status file
+        echo "Job finished: " $(date) >> "$from"/.syncStatus
+        exit 0
+fi
+
+find "$from"/ -xtype l -delete >/dev/null 2>&1 &
+
+
+
+
+
