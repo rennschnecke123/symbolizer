@@ -46,7 +46,7 @@ has some great effects. <br><br>
 A scenario:<br>
 Imagine you have one (fast) ssd and two (slow) hdds.<br<
 This is not exotic but a great combination for creating something like a "hybrid system".<br>
-Now you use the sdd as data disk. Great because it's fast!<br<
+Now you use the sdd as data disk. Great because it's fast!<br>
 Problem: There is no redundancy and there is not so much space compared to the two hdds.
 So a good way is to copy the data to a raid (mirror) of the two hdds (with a standard nas, zfs, linux raid....).
 Then you have speed, space _and_ redundancy.
