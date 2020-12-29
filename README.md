@@ -5,17 +5,17 @@ But ever thought about to handle this in a more advanced way?
 Use symbolizer which unites some great functions in one tool 
 which can do:
 
-- rsync 
+- rsync <br>
 Just like most people would sync to folders in one way without(!) deleting old data
 
-- snap
+- snap <br>
 Same as rsync but deleting old data so that both dirs are in sync!
 
-- archive
+- archive <br>
 Like rsync but not just copying data files but moving them to the destination.
 Files on the source will be replaced by symbolic links.
 
-- rebuild
+- rebuild<br>
 Convert all symbolic links into data files.
 This could be much more data then the amount fittung to your source!
 So after that it's possible that your source has no available space any more.
