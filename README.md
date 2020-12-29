@@ -51,10 +51,10 @@ Problem: There is no redundancy and there is not so much space compared to the t
 So a good way is to copy the data to a raid (mirror) of the two hdds (with a standard nas, zfs, linux raid....).
 Then you have speed, space _and_ redundancy.
 
-Writing: 
-ssd -&gt; fast
-Reading: 
-still on ssd? -&gt; fast 
+Writing: <br>
+ssd -&gt; fast<br>
+Reading: <br>
+still on ssd? -&gt; fast <br>
 moved to raid? -&gt; not like ssd but fast because when reading you have the bandwith of _both_ hdds.
 And when reading most hdds are much faster as when writing.
 
