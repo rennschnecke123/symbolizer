@@ -27,9 +27,9 @@ Perhaps there will be some *.tmp-Files left - delete them by hand or job.
 *How to use?
 
 Syntax:
-symbolizer <from> <to> [mode] [timeout]
+symbolizer &lt;from&gt; &lt;to&gt; [mode] [timeout]
 
-where <from> and <to> are source and destination folders.
+where &lt;from&gt; and &lt;to&gt; are source and destination folders.
 Mode and timeout are optional parameters where mode is one of the four modes explained above.
 Timeout is a value (in seconds - default: 3600) for the max runtime with the archive mode.
 This is the max time a file could disappear while being copied to the destination.
@@ -52,10 +52,10 @@ So a good way is to copy the data to a raid (mirror) of the two hdds (with a sta
 Then you have speed, space _and_ redundancy.
 
 Writing: 
-ssd -> fast
+ssd -&gt; fast
 Reading: 
-still on ssd? -> fast 
-moved to raid? -> not like ssd but fast because when reading you have the bandwith of _both_ hdds.
+still on ssd? -&gt; fast 
+moved to raid? -&gt; not like ssd but fast because when reading you have the bandwith of _both_ hdds.
 And when reading most hdds are much faster as when writing.
 
 And last but not least the rebuild mode is to get real data to the source again.
