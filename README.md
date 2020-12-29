@@ -64,7 +64,7 @@ Or you have to do some work, replacements ... on the raid so this is a possible 
 Perhaps temporary. 
 
 
-* How to control?
+*How to control?
 
 Supposing to use a cronjob to do a "symbolizer &lt;a&gt; &lt;b&gt;" every minute, hour, day.... you can use two ways to 
 choose the mode to use.
