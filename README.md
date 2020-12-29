@@ -69,9 +69,9 @@ Perhaps temporary.
 Supposing to use a cronjob to do a "symbolizer &lt;a&gt; &lt;b&gt;" every minute, hour, day.... you can use two ways to 
 choose the mode to use.
 If you choose the mode via script start this will only use this mode!
-If you don't choose a special mode with start there will two files in the folder:<br<
-.archive<br<
-.snap<br<
+If you don't choose a special mode with start there will two files in the folder:<br>
+.archive<br>
+.snap<br>
 
 With this default files the mode will be "rsync". So this will not change anything in your data but making backups to the destination.
 If you delete .archive and let only .snap be there, this will be the snap mode - but only once!
