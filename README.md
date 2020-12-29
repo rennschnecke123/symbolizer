@@ -26,8 +26,8 @@ Perhaps there will be some *.tmp-Files left - delete them by hand or job.
 
 *How to use?
 
-Syntax:
-symbolizer &lt;from&gt; &lt;to&gt; [mode] [timeout]
+Syntax:<br>
+<b>symbolizer &lt;from&gt; &lt;to&gt; [mode] [timeout]</b>
 
 where &lt;from&gt; and &lt;to&gt; are source and destination folders.
 Mode and timeout are optional parameters where mode is one of the four modes explained above.
@@ -42,15 +42,15 @@ Ok, you don't have to know any switch - just do "symbolizer <from> <to>" ... tha
 The snap mode nearly does the same but will destroy data not available via source.
 But have a look at the archive. In this mode you will get more space for new data on the
 source folder! This is because data will be moved to the destination and it will be replaced by symbolic links which
-has some great effects. 
-A scenario:
-Imagine you have one (fast) ssd and two (slow) hdds.
-This is not exotic but a great combination for creating something like a "hybrid system".
-Now you use the sdd as data disk. Great because it's fast!
+has some great effects. <br>
+A scenario:<br<
+Imagine you have one (fast) ssd and two (slow) hdds.<br<
+This is not exotic but a great combination for creating something like a "hybrid system".<br>
+Now you use the sdd as data disk. Great because it's fast!<br<
 Problem: There is no redundancy and there is not so much space compared to the two hdds.
 So a good way is to copy the data to a raid (mirror) of the two hdds (with a standard nas, zfs, linux raid....).
 Then you have speed, space _and_ redundancy.
-
+<br<
 Writing: <br>
 ssd -&gt; fast<br>
 Reading: <br>
@@ -69,9 +69,9 @@ Perhaps temporary.
 Supposing to use a cronjob to do a "symbolizer &lt;a&gt; &lt;b&gt;" every minute, hour, day.... you can use two ways to 
 choose the mode to use.
 If you choose the mode via script start this will only use this mode!
-If you don't choose a special mode with start there will two files in the folder:
-.archive
-.snap
+If you don't choose a special mode with start there will two files in the folder:<br<
+.archive<br<
+.snap<br<
 
 With this default files the mode will be "rsync". So this will not change anything in your data but making backups to the destination.
 If you delete .archive and let only .snap be there, this will be the snap mode - but only once!
@@ -79,7 +79,7 @@ After this .archive will be there again and the next run will be in rsync mode a
 If you delete .snap instead, this will be the archive mode and will stay in this mode!
 To get into the rebuild mode, store an empty file ".rebuild" in the source folder and delete .snap and .archive!
 After one run the mode is rsync again.
-
+<br>
 So, this could be a way for samba, sftp, ... to control the mode just via deleting a control file!
 If you want to be sure nobody could change the mode, just start the sync job with exact mode to use as described above.
 
