@@ -1,21 +1,21 @@
-*Symbolizer - a wrapper for rsync ... and more!
+<h2>*Symbolizer - a wrapper for rsync ... and more!</h2>
 
 Do you use rsync? Fine!
 But ever thought about to handle this in a more advanced way?
 Use symbolizer which unites some great functions in one tool 
 which can do:
 
-- rsync <br>
+<b>- rsync <br></b>
 Just like most people would sync to folders in one way without(!) deleting old data
 
-- snap <br>
+<b>- snap <br></b>
 Same as rsync but deleting old data so that both dirs are in sync!
 
-- archive <br>
+<b>- archive <br></b>
 Like rsync but not just copying data files but moving them to the destination.
 Files on the source will be replaced by symbolic links.
 
-- rebuild<br>
+<b>- rebuild<br></b>
 Convert all symbolic links into data files.
 This could be much more data then the amount fittung to your source!
 So after that it's possible that your source has no available space any more.
@@ -24,10 +24,10 @@ No data on source or destination will be destroyed.
 Perhaps there will be some *.tmp-Files left - delete them by hand or job. 
 
 
-*How to use?
+<h3>*How to use?</h3>
 
-Syntax:<br>
-<b>symbolizer &lt;from&gt; &lt;to&gt; [mode] [timeout]</b>
+<b>Syntax:<br>
+symbolizer &lt;from&gt; &lt;to&gt; [mode] [timeout]</b>
 
 where &lt;from&gt; and &lt;to&gt; are source and destination folders.
 Mode and timeout are optional parameters where mode is one of the four modes explained above.
@@ -35,22 +35,22 @@ Timeout is a value (in seconds - default: 3600) for the max runtime with the arc
 This is the max time a file could disappear while being copied to the destination.
 
 
-*Practical use
+<h3>*Practical use</h3>
 
 For just doing a rsync this tools wouldn't make sense.
 Ok, you don't have to know any switch - just do "symbolizer <from> <to>" ... that's all.
 The snap mode nearly does the same but will destroy data not available via source.
 But have a look at the archive. In this mode you will get more space for new data on the
 source folder! This is because data will be moved to the destination and it will be replaced by symbolic links which
-has some great effects. <br>
-A scenario:<br<
+has some great effects. <br><br>
+A scenario:<br>
 Imagine you have one (fast) ssd and two (slow) hdds.<br<
 This is not exotic but a great combination for creating something like a "hybrid system".<br>
 Now you use the sdd as data disk. Great because it's fast!<br<
 Problem: There is no redundancy and there is not so much space compared to the two hdds.
 So a good way is to copy the data to a raid (mirror) of the two hdds (with a standard nas, zfs, linux raid....).
 Then you have speed, space _and_ redundancy.
-<br<
+<br>
 Writing: <br>
 ssd -&gt; fast<br>
 Reading: <br>
@@ -64,7 +64,7 @@ Or you have to do some work, replacements ... on the raid so this is a possible 
 Perhaps temporary. 
 
 
-*How to control?
+<h3>*How to control?</h3>
 
 Supposing to use a cronjob to do a "symbolizer &lt;a&gt; &lt;b&gt;" every minute, hour, day.... you can use two ways to 
 choose the mode to use.
