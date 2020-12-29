@@ -74,12 +74,12 @@ If you don't choose a special mode with start there will two files in the folder
 .snap<br>
 
 With this default files the mode will be "rsync". So this will not change anything in your data but making backups to the destination.
-If you delete .archive and let only .snap be there, this will be the snap mode - but only once!
-After this .archive will be there again and the next run will be in rsync mode again.
-If you delete .snap instead, this will be the archive mode and will stay in this mode!
-To get into the rebuild mode, store an empty file ".rebuild" in the source folder and delete .snap and .archive!
+If you delete .archive and let only .snap be there, this will be the snap mode - but only once!<br>
+After this .archive will be there again and the next run will be in rsync mode again.<br>
+If you delete .snap instead, this will be the archive mode and will stay in this mode!<br>
+To get into the rebuild mode, store an empty file ".rebuild" in the source folder and delete .snap and .archive!<br>
 After one run the mode is rsync again.
 <br>
-So, this could be a way for samba, sftp, ... to control the mode just via deleting a control file!
+So, this could be a way for samba, sftp, ... to control the mode just via deleting a control file!<br>
 If you want to be sure nobody could change the mode, just start the sync job with exact mode to use as described above.
 
