@@ -44,7 +44,7 @@ But have a look at the archive. In this mode you will get more space for new dat
 source folder! This is because data will be moved to the destination and it will be replaced by symbolic links which
 has some great effects. <br><br>
 A scenario:<br>
-Imagine you have one (fast) ssd and two (slow) hdds.<br<
+Imagine you have one (fast) ssd and two (slow) hdds.<br>
 This is not exotic but a great combination for creating something like a "hybrid system".<br>
 Now you use the sdd as data disk. Great because it's fast!<br>
 Problem: There is no redundancy and there is not so much space compared to the two hdds.
