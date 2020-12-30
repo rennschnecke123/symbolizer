@@ -60,7 +60,7 @@ And when reading most hdds are much faster as when writing.
 
 And last but not least the rebuild mode is to get real data to the source again.
 This is just because you want to have real files there real - not just links.
-Or you have to do some work, replacements ... on the raid so this is a possible way to move the data back.
+Or you have to do some work, replacements ... on the raid so this is a possible way to copy the data back.
 Perhaps temporary. 
 
 
