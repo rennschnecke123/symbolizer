@@ -69,7 +69,7 @@ Perhaps temporary.
 Supposing to use a cronjob to do a "symbolizer &lt;a&gt; &lt;b&gt;" every minute, hour, day.... you can use two ways to 
 choose the mode to use.
 If you choose the mode via script start this will only use this mode!
-If you don't choose a special mode with start there will two files in the folder:<br>
+If you don't choose a special mode with start there will be two files in the folder:<br>
 .archive<br>
 .snap<br>
 
