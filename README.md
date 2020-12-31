@@ -23,6 +23,19 @@ But this should be no problem (if this is a partition so you don't have side eff
 No data on source or destination will be destroyed. 
 Perhaps there will be some *.tmp-Files left - delete them by hand or job. 
 
+which are the main functions.
+In addition there are these modes available via script start:
+
+<b>- safe <br></b>
+Like no specific mode this a file controlled mode.
+But it's not possible to activate snap or rebuild mode.
+
+<b>- blackhole <br></b>
+Like rsync mode but moving all data to the destination.
+
+<b>- justLink <br></b>
+Copies no data between source and destination but links already available data from the 
+destination to the source.
 
 <h3>*How to use?</h3>
 
