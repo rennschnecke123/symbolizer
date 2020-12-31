@@ -23,7 +23,7 @@ But this should be no problem (if this is a partition so you don't have side eff
 No data on source or destination will be destroyed. 
 Perhaps there will be some *.tmp-Files left - delete them by hand or job. 
 
-which are the main functions.
+This are the main functions.<br>
 In addition there are these modes available via script start:
 
 <b>- safe <br></b>
