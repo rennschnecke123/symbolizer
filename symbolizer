@@ -110,6 +110,11 @@ fi
 
 # do it!
 
+# remove garbage
+find "$from"/ -xtype l -delete >/dev/null 2>&1 &
+
+
+
 # status file
 echo "Mode: " $mode > "$from"/.syncStatus
 echo "Job startet: " $(date) >> "$from"/.syncStatus
@@ -184,9 +189,6 @@ then
         echo "Job finished: " $(date) >> "$from"/.syncStatus
         exit 0
 fi
-
-find "$from"/ -xtype l -delete >/dev/null 2>&1 &
-
 
 
 
