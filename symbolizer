@@ -58,6 +58,17 @@ else
         echo "$from -> $to"
 fi
 
+
+# Test if available
+if [ ! -d "$from" ]; then
+    echo "$from doesn't exist or isn't a directory"
+    exit 1
+fi
+if [ ! -d "$to" ]; then
+    echo "$to doesn't exist or isn't a directory"
+    exit 1
+fi
+
 if [ "$omode" == "safe" ];
 then
 	restricted=1
@@ -110,9 +121,9 @@ fi
 
 # do it!
 
+
 # remove garbage
 find "$from"/ -xtype l -delete >/dev/null 2>&1 &
-
 
 
 # status file
@@ -189,7 +200,3 @@ then
         echo "Job finished: " $(date) >> "$from"/.syncStatus
         exit 0
 fi
-
-
-
-
