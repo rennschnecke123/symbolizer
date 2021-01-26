@@ -131,7 +131,7 @@ echo "Mode: " $mode > "$from"/.syncStatus
 echo "Job startet: " $(date) >> "$from"/.syncStatus
 
 # rebuild mode
-if [ "$mode" == "rebuild" ] && [ $restricted -eq 0 ];
+if [ "$mode" == "rebuild" ] && [ "$restricted" -eq "0" ];
 then
 	echo "Mode: rebuild"
 	if [ "$omode" == "" ];
