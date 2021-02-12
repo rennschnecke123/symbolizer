@@ -79,7 +79,7 @@ fi
 if [ "$omode" == "alternate" ];
 then
 	FREE=$(df $to | tail -1 | awk '{print $5}' | cut -d'%' -f1)
-	if [ "FREE" -lt "90" ];
+	if [ "$FREE" -lt "90" ];
 	then
 		omode='archive'
 	else
