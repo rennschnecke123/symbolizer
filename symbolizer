@@ -23,7 +23,7 @@ timeout=$4
 mode=""
 restricted=0
 
-if [ "$omode" != "" ] && [ "$omode" != "archive" ] && [ "$omode" != "rsync" ] && [ "$omode" != "snap" ] && [ "$omode" != "rebuild" ] && [ "$omode" != "safe" ] && [ "$omode" != "blackhole" ] && [ "$omode" != "justLink" ];
+if [ "$omode" != "" ] && [ "$omode" != "archive" ] && [ "$omode" != "rsync" ] && [ "$omode" != "snap" ] && [ "$omode" != "rebuild" ] && [ "$omode" != "safe" ] && [ "$omode" != "blackhole" ] && [ "$omode" != "justLink" ] && [ "$omode" != "alternate" ];
 then
 	echo "unknown mode $omode"
 	exit 0
@@ -49,6 +49,7 @@ then
 	echo "- safe"
 	echo "- blackhole"
 	echo "- justLink"
+	echo "- alternate"
 
 
         exit 0
@@ -75,6 +76,16 @@ then
 	omode=""
 fi
 
+if [ "$omode" == "alternate" ];
+then
+	FREE=$(df $to | tail -1 | awk '{print $5}' | cut -d'%' -f1)
+	if [ "FREE" -lt "90" ];
+	then
+		omode='archive'
+	else
+		omode='snap'
+	fi
+fi
 
 if [ ! -e "$from"/.archive ] && [ ! -e "$from"/.snap ] && [ "$omode" == "" ];
 then
@@ -150,7 +161,7 @@ fi
 if [ "$mode" == "snap" ] && [ $restricted -eq 0 ];
 then
 	echo "Mode: snap"
-	rsync -avP --safe-links --size-only --delete "$from"/ "$to"/ 
+	rsync -avP --safe-links --size-only --delete "$from"/ "$to"/ >/dev/null 2>&1 
 	rm "$from"/.snap >/dev/null 2>&1
 	# status file
 	echo "Job finished: " $(date) >> "$from"/.syncStatus
@@ -200,3 +211,4 @@ then
         echo "Job finished: " $(date) >> "$from"/.syncStatus
         exit 0
 fi
+
