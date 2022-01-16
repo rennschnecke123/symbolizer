@@ -78,12 +78,21 @@ fi
 
 if [ "$omode" == "alternate" ];
 then
-	FREE=$(df $to | tail -1 | awk '{print $5}' | cut -d'%' -f1)
-	if [ "$FREE" -lt "90" ];
+	FREETO=$(df $to | tail -1 | awk '{print $5}' | cut -d'%' -f1)
+	FREEFROM=$(df $from | tail -1 | awk '{print $5}' | cut -d'%' -f1)
+	if [ "$FREEFROM" -lt "80" ] && [ "$FREETO" -lt "80" ];
 	then
-		omode='archive'
+		#omode="rsync"
+		mode="rsync"
 	else
-		omode='snap'
+		if [ "$FREETO" -lt "90" ];
+		then
+			#omode='archive'
+			mode='archive'
+		else			
+			#omode='snap'
+			mode='snap'
+		fi
 	fi
 fi
 
@@ -125,8 +134,11 @@ then
         then
 		mode="rebuild"
         fi
-else
-	mode="$omode"
+else 
+	if [ "$mode" == "" ];
+	then
+		mode="$omode"
+	fi
 fi
 
 
@@ -150,7 +162,6 @@ then
 		touch "$from"/.archive >/dev/null 2>&1
 	touch "$from"/.snap >/dev/null 2>&1
 	fi
-	rsync -avP --safe-links --size-only "$from"/* "$to"/ 
 	find "$from" -type l -print -exec cp "{}" "{}.tmp" \; -exec mv "{}.tmp" "{}" \; >/dev/null 2>&1
 	# status file
 	echo "Job finished: " $(date) >> "$from"/.syncStatus
@@ -211,4 +222,5 @@ then
         echo "Job finished: " $(date) >> "$from"/.syncStatus
         exit 0
 fi
+
 
