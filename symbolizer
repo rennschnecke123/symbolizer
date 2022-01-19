@@ -35,6 +35,7 @@ then
 fi
 
 
+
 if [ "$from" == "" ] || [ "$to" == "" ];
 then
 	echo ""
@@ -73,8 +74,16 @@ fi
 if [ "$omode" == "safe" ];
 then
 	restricted=1
-	omode=""
+	omode="safe"
 fi
+
+if [ "$omode" == "" ];
+then
+	omode="default";
+	mode="default";
+
+fi
+
 
 if [ "$omode" == "alternate" ];
 then
@@ -109,7 +118,7 @@ fi
 
 
 # modes
-if [ "$omode" == "" ];
+if [ "$omode" == "safe" ];
 then
 	#archive
 	if [ -e "$from"/.archive ] && [ ! -e "$from"/.snap ];
@@ -218,6 +227,22 @@ if [ "$mode" == "justLink" ];
 then
         echo "Mode: justLink"
         cp -ans  "$to"/* "$from"/ >/dev/null 2>&1
+        # status file
+        echo "Job finished: " $(date) >> "$from"/.syncStatus
+        exit 0
+fi
+
+# default mode
+if [ "$mode" == "default" ];
+then
+	echo "Step 1"
+        echo "Mode: rsync"
+        rsync -avP --safe-links --size-only "$from"/* "$to"/
+	echo "Step 2"
+	echo "Mode: archive"
+	timeout -k $timeout -s 9 $timeout rsync -avP --safe-links --size-only --remove-source-files "$from"/* "$to"/
+        cp -ans  "$to"/* "$from"/ >/dev/null 2>&1
+
         # status file
         echo "Job finished: " $(date) >> "$from"/.syncStatus
         exit 0
